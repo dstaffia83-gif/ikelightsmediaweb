@@ -1,0 +1,42 @@
+<!-- Chatbot Component -->
+<div class="chatbot-container" id="ikelights-chatbot">
+    <div class="chatbot-toggle" id="chatbotToggle">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            <div class="chatbot-info">
+                <i class="fas fa-robot"></i>
+                <div>
+                    <h4>IKELIGHTS Assistant</h4>
+                    <p>Online • Usually replies instantly</p>
+                </div>
+            </div>
+            <button class="chatbot-minimize" id="minimizeChat">&minus;</button>
+        </div>
+        
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="message bot">
+                <div class="message-content">
+                    <p>👋 Hello! I'm IKELIGHTS virtual assistant. How can I help you today?</p>
+                    <div class="quick-replies">
+                        <button onclick="window.chatbot.quickReply('Pricing')">💰 Pricing</button>
+                        <button onclick="window.chatbot.quickReply('Booking')">📅 Booking</button>
+                        <button onclick="window.chatbot.quickReply('Location')">📍 Location</button>
+                        <button onclick="window.chatbot.quickReply('Services')">🎬 Services</button>
+                        <button onclick="window.chatbot.quickReply('Contact')">📞 Contact</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chatbot-input-area">
+            <input type="text" id="chatInput" placeholder="Type your message..." autocomplete="off">
+            <button id="sendMessageBtn">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script src="assets/js/chatbot.js"></script>

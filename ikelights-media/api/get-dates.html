@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API - Get Dates</title>
+</head>
+<body>
+    <script>
+        // This file simulates an API endpoint for getting booked dates
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookings = JSON.parse(localStorage.getItem('ikelights_bookings') || '[]');
+        
+        if (urlParams.has('date')) {
+            // Get booked times for specific date
+            const date = urlParams.get('date');
+            const bookedTimes = bookings.filter(b => b.date === date).map(b => b.time);
+            document.write(JSON.stringify({success: true, booked_times: bookedTimes}));
+        } else if (urlParams.has('year') && urlParams.has('month')) {
+            // Get all bookings for month
+            const year = urlParams.get('year');
+            const month = urlParams.get('month');
+            const monthStr = month.padStart(2, '0');
+            const monthBookings = {};
+            
+            bookings.forEach(booking => {
+                if (booking.date.startsWith(`${year}-${monthStr}`)) {
+                    monthBookings[booking.date] = (monthBookings[booking.date] || 0) + 1;
+                }
+            });
+            
+            document.write(JSON.stringify({success: true, bookings: monthBookings}));
+        } else {
+            // Get all blocked dates
+            const blockedDates = [...new Set(bookings.map(b => b.date))];
+            document.write(JSON.stringify({success: true, blocked_dates: blockedDates}));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!-- Navigation -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <a href="index.html">
+                <h1>IKELIGHTS <span>MEDIA</span></h1>
+                <p class="tagline">Capturing Moments, Creating Memories</p>
+            </a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html" id="navHome">Home</a></li>
+            <li><a href="rates.html" id="navRates">Rate Cards</a></li>
+            <li><a href="booking.html" id="navBooking">Book Now</a></li>
+            <li><a href="gallery.html" id="navGallery">Our Work</a></li>
+            <li><a href="contact.html" id="navContact">Contact</a></li>
+            <li><a href="suggestions.html" id="navSuggestions">Suggestions</a></li>
+            <li><a href="admin/login.html" class="admin-btn" id="navAdmin">Admin</a></li>
+        </ul>
+    </div>
+</nav>
+
+<script>
+    // Set active nav based on current page
+    const currentPage = window.location.pathname.split('/').pop();
+    const navLinks = {
+        'index.html': 'navHome',
+        'rates.html': 'navRates',
+        'booking.html': 'navBooking',
+        'gallery.html': 'navGallery',
+        'contact.html': 'navContact',
+        'suggestions.html': 'navSuggestions'
+    };
+    if (navLinks[currentPage]) {
+        document.getElementById(navLinks[currentPage])?.classList.add('active');
+    }
+</script>

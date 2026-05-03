@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team - IKELIGHTS MEDIA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rockwell&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Team Page Additional Styles */
+        .team-section {
+            padding: 120px 2rem 5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .team-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .team-header h1 {
+            font-size: 2.5rem;
+            color: #36454F;
+            margin-bottom: 1rem;
+        }
+        
+        .team-header .subtitle {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #E2725B;
+            margin-bottom: 1rem;
+        }
+        
+        .team-header .description {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* CEO Section */
+        .ceo-section {
+            margin-bottom: 5rem;
+            background: linear-gradient(135deg, rgba(54,69,79,0.05), rgba(226,114,91,0.05));
+            border-radius: 30px;
+            padding: 3rem;
+        }
+        
+        .ceo-card {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .ceo-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .ceo-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .ceo-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        .ceo-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #E2725B;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .ceo-info h2 {
+            font-size: 2rem;
+            color: #36454F;
+            margin-bottom: 0.5rem;
+        }
+        
+        .ceo-title {
+            font-size: 1.2rem;
+            color: #E2725B;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+        
+        .ceo-bio {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .ceo-stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #E2725B;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        .ceo-social {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .ceo-social a {
+            width: 45px;
+            height: 45px;
+            background: #f5f5f7;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #36454F;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .ceo-social a:hover {
+            background: #E2725B;
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        /* Team Members Grid */
+        .team-members {
+            margin-top: 3rem;
+        }
+        
+        .team-members h2 {
+            text-align: center;
+            font-size: 2rem;
+            color: #36454F;
+            margin-bottom: 2rem;
+        }
+        
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .member-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+        
+        .member-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .member-image {
+            position: relative;
+            overflow: hidden;
+            height: 300px;
+        }
+        
+        .member-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .member-card:hover .member-image img {
+            transform: scale(1.1);
+        }
+        
+        .member-social {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            transition: bottom 0.3s;
+        }
+        
+        .member-card:hover .member-social {
+            bottom: 0;
+        }
+        
+        .member-social a {
+            width: 35px;
+            height: 35px;
+            background: #E2725B;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .member-social a:hover {
+            background: white;
+            color: #E2725B;
+            transform: scale(1.1);
+        }
+        
+        .member-info {
+            padding: 1.5rem;
+        }
+        
+        .member-info h3 {
+            font-size: 1.3rem;
+            color: #36454F;
+            margin-bottom: 0.3rem;
+        }
+        
+        .member-title {
+            color: #E2725B;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+        }
+        
+        .member-bio {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        
+        /* Mission & Vision Section */
+        .mission-section {
+            margin-top: 5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .mission-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .mission-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .mission-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #36454F, #E2725B);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .mission-icon i {
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .mission-card h3 {
+            font-size: 1.5rem;
+            color: #36454F;
+            margin-bottom: 1rem;
+        }
+        
+        .mission-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Responsive */
+        @media (max-width: 968px) {
+            .ceo-card {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .ceo-image img {
+                height: 350px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .team-section {
+                padding: 100px 1.5rem 3rem;
+            }
+            
+            .team-header h1 {
+                font-size: 2rem;
+            }
+            
+            .ceo-section {
+                padding: 1.5rem;
+            }
+            
+            .ceo-image img {
+                height: 280px;
+            }
+            
+            .ceo-info h2 {
+                font-size: 1.5rem;
+            }
+            
+            .members-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <a href="index.html">
+                <h1>IKELIGHTS <span>MEDIA</span></h1>
+                <p class="tagline">Capturing Moments, Creating Memories</p>
+            </a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="rates.html">Rate Cards</a></li>
+            <li><a href="booking.html">Book Now</a></li>
+            <li><a href="gallery.html">Our Work</a></li>
+            <li><a href="team.html" class="active">Our Team</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="suggestions.html">Suggestions</a></li>
+            <li><a href="admin/login.html" class="admin-btn">Admin</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Team Section -->
+<section class="team-section">
+    <div class="team-header">
+        <h1>Meet Our Creative Team</h1>
+        <div class="subtitle">The passionate minds behind IKELIGHTS MEDIA</div>
+        <p class="description">We are a team of dedicated photographers, videographers, and creative professionals committed to capturing life's most precious moments.</p>
+    </div>
+    
+    <!-- CEO Section -->
+    <div class="ceo-section">
+        <div class="ceo-card">
+            <div class="ceo-image">
+                <img src="assets/images/ceo.jpg" alt="CEO - IKELIGHTS MEDIA" onerror="this.src='https://via.placeholder.com/400x500/36454F/white?text=CEO+Photo'">
+                <div class="ceo-badge">Founder & CEO</div>
+            </div>
+            <div class="ceo-info">
+                <h2>Kwame Asante</h2>
+                <div class="ceo-title">Founder & Chief Creative Officer</div>
+                <p class="ceo-bio">With over 12 years of experience in professional photography and videography, Kwame founded IKELIGHTS MEDIA with a vision to create timeless visual stories. His passion for capturing authentic moments and his keen eye for detail have made him one of Ghana's most sought-after photographers. Under his leadership, IKELIGHTS MEDIA has grown from a solo venture to a team of talented creatives serving clients across the country.</p>
+                
+                <div class="ceo-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">12+</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Happy Clients</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Awards Won</div>
+                    </div>
+                </div>
+                
+                <div class="ceo-social">
+                    <a href="https://instagram.com/kwameasante" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://twitter.com/kwameasante" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://linkedin.com/in/kwameasante" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://facebook.com/kwameasante" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Team Members -->
+    <div class="team-members">
+        <h2>Our Creative Team</h2>
+        <div class="members-grid">
+            
+            <!-- Team Member 1 - Lead Photographer -->
+            <div class="member-card">
+                <div class="member-image">
+                    <img src="assets/images/team/photographer1.jpg" alt="Lead Photographer" onerror="this.src='https://via.placeholder.com/400x300/E2725B/white?text=Lead+Photographer'">
+                    <div class="member-social">
+                        <a href="https://instagram.com/amachristabel" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/amachristabel" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://linkedin.com/in/amachristabel" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <h3>Christabel Ama</h3>
+                    <div class="member-title">Lead Photographer</div>
+                    <p class="member-bio">Specializes in wedding and portrait photography. Christabel has a unique ability to capture genuine emotions and candid moments that tell beautiful stories.</p>
+                </div>
+            </div>
+            
+            <!-- Team Member 2 - Videographer -->
+            <div class="member-card">
+                <div class="member-image">
+                    <img src="assets/images/team/videographer1.jpg" alt="Videographer" onerror="this.src='https://via.placeholder.com/400x300/36454F/white?text=Videographer'">
+                    <div class="member-social">
+                        <a href="https://instagram.com/michaeldavid" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/michaeldavid" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://youtube.com/michaeldavid" target="_blank"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <h3>Michael David</h3>
+                    <div class="member-title">Lead Videographer</div>
+                    <p class="member-bio">Master storyteller through motion. Michael creates cinematic wedding films and corporate videos that leave lasting impressions.</p>
+                </div>
+            </div>
+            
+            <!-- Team Member 3 - Photo Editor -->
+            <div class="member-card">
+                <div class="member-image">
+                    <img src="assets/images/team/editor1.jpg" alt="Photo Editor" onerror="this.src='https://via.placeholder.com/400x300/E2725B/white?text=Photo+Editor'">
+                    <div class="member-social">
+                        <a href="https://instagram.com/sarahjohnson" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/sarahjohnson" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://behance.net/sarahjohnson" target="_blank"><i class="fab fa-behance"></i></a>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <h3>Sarah Johnson</h3>
+                    <div class="member-title">Senior Photo Editor</div>
+                    <p class="member-bio">Expert in color grading and retouching. Sarah ensures every image meets the highest quality standards with her meticulous attention to detail.</p>
+                </div>
+            </div>
+            
+            <!-- Team Member 4 - Event Coordinator -->
+            <div class="member-card">
+                <div class="member-image">
+                    <img src="assets/images/team/coordinator1.jpg" alt="Event Coordinator" onerror="this.src='https://via.placeholder.com/400x300/36454F/white?text=Event+Coordinator'">
+                    <div class="member-social">
+                        <a href="https://instagram.com/jameswilson" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com/in/jameswilson" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <h3>James Wilson</h3>
+                    <div class="member-title">Event Coordinator</div>
+                    <p class="member-bio">Ensures seamless client experiences from booking to delivery. James manages schedules, coordinates shoots, and handles client communication.</p>
+                </div>
+            </div>
+            
+            <!-- Team Member 5 - Drone Operator -->
+            <div class="member-card">
+                <div class="member-image">
+                    <img src="assets/images/team/drone1.jpg" alt="Drone Operator" onerror="this.src='https://via.placeholder.com/400x300/E2725B/white?text=Drone+Operator'">
+                    <div class="member-social">
+                        <a href="https://instagram.com/alexmensah" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/alexmensah" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <h3>Alex Mensah</h3>
+                    <div class="member-title">Drone Operator</div>
+                    <p class="member-bio">Licenced drone pilot specializing in aerial photography and videography. Alex captures breathtaking overhead shots for weddings and events.</p>
+                </div>
+            </div>
+            
+            <!-- Team Member 6 - Marketing Manager -->
+            <div class="member-card">
+                <div class="member-image">
+                    <img src="assets/images/team/marketing1.jpg" alt="Marketing Manager" onerror="this.src='https://via.placeholder.com/400x300/36454F/white?text=Marketing+Manager'">
+                    <div class="member-social">
+                        <a href="https://instagram.com/priscillaadjei" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://linkedin.com/in/priscillaadjei" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <h3>Priscilla Adjei</h3>
+                    <div class="member-title">Marketing Manager</div>
+                    <p class="member-bio">Drives brand growth and client acquisition. Priscilla ensures IKELIGHTS MEDIA reaches the right audience with compelling marketing strategies.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Mission & Vision Section -->
+    <div class="mission-section">
+        <div class="mission-card">
+            <div class="mission-icon">
+                <i class="fas fa-bullseye"></i>
+            </div>
+            <h3>Our Mission</h3>
+            <p>To capture and preserve life's most precious moments through exceptional photography and videography, delivering timeless memories that families will cherish for generations.</p>
+        </div>
+        
+        <div class="mission-card">
+            <div class="mission-icon">
+                <i class="fas fa-eye"></i>
+            </div>
+            <h3>Our Vision</h3>
+            <p>To become Ghana's most trusted creative media company, known for artistic excellence, professional integrity, and an unwavering commitment to client satisfaction.</p>
+        </div>
+        
+        <div class="mission-card">
+            <div class="mission-icon">
+                <i class="fas fa-heart"></i>
+            </div>
+            <h3>Our Values</h3>
+            <p>Creativity, Excellence, Integrity, Innovation, and Client-First Service. These core values guide everything we do at IKELIGHTS MEDIA.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3 class="footer-logo">IKELIGHTS <span>MEDIA</span></h3>
+                <p>Capturing moments, creating memories that last a lifetime. Premium photography and videography services in Accra, Ghana.</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/ikelightsmedia" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/ikelightsmedia" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/ikelightsmedia" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://tiktok.com/@ikelightsmedia" target="_blank"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="rates.html">Rate Cards</a></li>
+                    <li><a href="booking.html">Book Now</a></li>
+                    <li><a href="gallery.html">Our Work</a></li>
+                    <li><a href="team.html">Our Team</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul>
+                    <li>Wedding Photography</li>
+                    <li>Portrait Sessions</li>
+                    <li>Event Coverage</li>
+                    <li>Photo Retouching</li>
+                    <li>Drone Videography</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> HM7F+MGV Weija, Accra, Ghana</li>
+                    <li><i class="fas fa-phone"></i> <a href="tel:+233546117004">054 611 7004</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:vcasio94@gmail.com">vcasio94@gmail.com</a></li>
+                    <li><i class="fas fa-clock"></i> Mon-Sat: 9AM - 6PM</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> IKELIGHTS MEDIA. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/233546117004" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- Chatbot (same as before) -->
+<div class="chatbot-container" id="ikelights-chatbot">
+    <div class="chatbot-toggle" id="chatbotToggle">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            <div class="chatbot-info">
+                <i class="fas fa-robot"></i>
+                <div>
+                    <h4>IKELIGHTS Assistant</h4>
+                    <p>Online • Usually replies instantly</p>
+                </div>
+            </div>
+            <button class="chatbot-minimize" id="minimizeChat">&minus;</button>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="message bot">
+                <div class="message-content">
+                    <p>👋 Hello! I'm IKELIGHTS virtual assistant. How can I help you today?</p>
+                    <div class="quick-replies">
+                        <button onclick="window.chatbot.quickReply('Pricing')">💰 Pricing</button>
+                        <button onclick="window.chatbot.quickReply('Booking')">📅 Booking</button>
+                        <button onclick="window.chatbot.quickReply('Team')">👥 Our Team</button>
+                        <button onclick="window.chatbot.quickReply('Services')">🎬 Services</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-input-area">
+            <input type="text" id="chatInput" placeholder="Type your message...">
+            <button id="sendMessageBtn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+</div>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/chatbot.js"></script>
+
+<script>
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+    
+    // Mobile menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+    }
+    
+    // Sticky navbar
+    window.addEventListener('scroll', () => {
+        const navbar = document.getElementById('navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+    
+    // Update chatbot responses to include team info
+    if (window.chatbot) {
+        const originalGetResponse = window.chatbot.getBotResponse;
+        window.chatbot.getBotResponse = function(message) {
+            const msg = message.toLowerCase();
+            if (msg.includes('team') || msg.includes('ceo') || msg.includes('founder') || msg.includes('staff') || msg.includes('people')) {
+                return "👥 Our team is led by our Founder & CEO, Kwame Asante, along with talented photographers, videographers, editors, and coordinators. Visit our Team page to meet everyone and learn about their roles! 🎬";
+            }
+            return originalGetResponse.call(this, message);
+        };
+    }
+</script>
+
+<!-- Update chatbot quick replies -->
+<script>
+    // Add to existing chatbot or replace
+    setTimeout(() => {
+        if (window.chatbot && document.querySelector('.quick-replies')) {
+            const quickReplies = document.querySelector('.quick-replies');
+            if (quickReplies && !quickReplies.innerHTML.includes('Team')) {
+                const teamBtn = document.createElement('button');
+                teamBtn.innerHTML = '👥 Team';
+                teamBtn.onclick = () => window.chatbot.quickReply('Team');
+                quickReplies.appendChild(teamBtn);
+            }
+        }
+    }, 500);
+</script>
+
+</body>
+</html>

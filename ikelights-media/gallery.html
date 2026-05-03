@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Work - IKELIGHTS MEDIA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rockwell&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Gallery page specific styles - FIXED FOOTER */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        .gallery-section {
+            flex: 1;
+            padding: 120px 2rem 3rem;
+        }
+        
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .gallery-header h1 {
+            font-size: 2.5rem;
+            color: #36454F;
+            margin-bottom: 1rem;
+        }
+        
+        .gallery-header p {
+            color: #666;
+        }
+        
+        .gallery-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        .gallery-overlay h3 {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .gallery-overlay p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+        
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        
+        .footer {
+            margin-top: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .gallery-section {
+                padding: 100px 1rem 2rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .gallery-header h1 {
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .gallery-item img {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <a href="index.html">
+                <h1>IKELIGHTS <span>MEDIA</span></h1>
+                <p class="tagline">Capturing Moments, Creating Memories</p>
+            </a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="rates.html">Rate Cards</a></li>
+            <li><a href="booking.html">Book Now</a></li>
+            <li><a href="gallery.html" class="active">Our Work</a></li>
+            <li><a href="team.html">Our Team</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="suggestions.html">Suggestions</a></li>
+            <li><a href="admin/login.html" class="admin-btn">Admin</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Gallery Section -->
+<section class="gallery-section">
+    <div class="gallery-header">
+        <h1>Our Work</h1>
+        <p>Browse through our portfolio of stunning photography and videography</p>
+    </div>
+    
+    <div class="gallery-grid" id="galleryGrid">
+        <!-- Sample Gallery Items - Replace with your actual images -->
+        <div class="gallery-item" onclick="openLightbox('assets/images/gallery/wedding1.jpg')">
+            <img src="https://via.placeholder.com/400x300/E2725B/white?text=Wedding+Photography" alt="Wedding Photography">
+            <div class="gallery-overlay">
+                <h3>Wedding Photography</h3>
+                <p>Beautiful wedding moments captured</p>
+            </div>
+        </div>
+        
+        <div class="gallery-item" onclick="openLightbox('assets/images/gallery/portrait1.jpg')">
+            <img src="https://via.placeholder.com/400x300/36454F/white?text=Portrait+Session" alt="Portrait Session">
+            <div class="gallery-overlay">
+                <h3>Portrait Session</h3>
+                <p>Professional portraiture</p>
+            </div>
+        </div>
+        
+        <div class="gallery-item" onclick="openLightbox('assets/images/gallery/event1.jpg')">
+            <img src="https://via.placeholder.com/400x300/E2725B/white?text=Event+Coverage" alt="Event Coverage">
+            <div class="gallery-overlay">
+                <h3>Event Coverage</h3>
+                <p>Corporate and private events</p>
+            </div>
+        </div>
+        
+        <div class="gallery-item" onclick="openLightbox('assets/images/gallery/retouching1.jpg')">
+            <img src="https://via.placeholder.com/400x300/36454F/white?text=Photo+Retouching" alt="Photo Retouching">
+            <div class="gallery-overlay">
+                <h3>Photo Retouching</h3>
+                <p>Professional editing services</p>
+            </div>
+        </div>
+        
+        <div class="gallery-item" onclick="openLightbox('assets/images/gallery/wedding2.jpg')">
+            <img src="https://via.placeholder.com/400x300/E2725B/white?text=Couple+Portrait" alt="Couple Portrait">
+            <div class="gallery-overlay">
+                <h3>Couple Portrait</h3>
+                <p>Romantic engagement shoot</p>
+            </div>
+        </div>
+        
+        <div class="gallery-item" onclick="openLightbox('assets/images/gallery/event2.jpg')">
+            <img src="https://via.placeholder.com/400x300/36454F/white?text=Corporate+Event" alt="Corporate Event">
+            <div class="gallery-overlay">
+                <h3>Corporate Event</h3>
+                <p>Professional event coverage</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+    <span class="lightbox-close">&times;</span>
+    <img id="lightboxImg" src="">
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3 class="footer-logo">IKELIGHTS <span>MEDIA</span></h3>
+                <p>Capturing moments, creating memories that last a lifetime. Premium photography and videography services in Accra, Ghana.</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/ikelightsmedia" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/ikelightsmedia" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/ikelightsmedia" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://tiktok.com/@ikelightsmedia" target="_blank"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="rates.html">Rate Cards</a></li>
+                    <li><a href="booking.html">Book Now</a></li>
+                    <li><a href="gallery.html">Our Work</a></li>
+                    <li><a href="team.html">Our Team</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul>
+                    <li>Wedding Photography</li>
+                    <li>Portrait Sessions</li>
+                    <li>Event Coverage</li>
+                    <li>Photo Retouching</li>
+                    <li>One-on-One Classes</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> HM7F+MGV Weija, Accra, Ghana</li>
+                    <li><i class="fas fa-phone"></i> <a href="tel:+233546117004">054 611 7004</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:vcasio94@gmail.com">vcasio94@gmail.com</a></li>
+                    <li><i class="fas fa-clock"></i> Mon-Sat: 9AM - 6PM</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> IKELIGHTS MEDIA. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/233546117004" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- Chatbot -->
+<div class="chatbot-container" id="ikelights-chatbot">
+    <div class="chatbot-toggle" id="chatbotToggle">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            <div class="chatbot-info">
+                <i class="fas fa-robot"></i>
+                <div>
+                    <h4>IKELIGHTS Assistant</h4>
+                    <p>Online • Usually replies instantly</p>
+                </div>
+            </div>
+            <button class="chatbot-minimize" id="minimizeChat">&minus;</button>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="message bot">
+                <div class="message-content">
+                    <p>👋 Hello! I'm IKELIGHTS virtual assistant. How can I help you today?</p>
+                    <div class="quick-replies">
+                        <button onclick="window.chatbot.quickReply('Pricing')">💰 Pricing</button>
+                        <button onclick="window.chatbot.quickReply('Booking')">📅 Booking</button>
+                        <button onclick="window.chatbot.quickReply('Gallery')">🖼️ Gallery</button>
+                        <button onclick="window.chatbot.quickReply('Services')">🎬 Services</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-input-area">
+            <input type="text" id="chatInput" placeholder="Type your message...">
+            <button id="sendMessageBtn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openLightbox(imageSrc) {
+        document.getElementById('lightboxImg').src = imageSrc;
+        document.getElementById('lightbox').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    
+    function closeLightbox() {
+        document.getElementById('lightbox').classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+    
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && document.getElementById('lightbox').classList.contains('active')) {
+            closeLightbox();
+        }
+    });
+    
+    // Mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+    }
+    
+    // Sticky navbar
+    window.addEventListener('scroll', () => {
+        const navbar = document.getElementById('navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+    
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+</script>
+
+<script src="assets/js/chatbot.js"></script>
+</body>
+</html>

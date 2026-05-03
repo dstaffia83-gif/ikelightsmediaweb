@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggestions - IKELIGHTS MEDIA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rockwell&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <a href="index.html">
+                <h1>IKELIGHTS <span>MEDIA</span></h1>
+                <p class="tagline">Capturing Moments, Creating Memories</p>
+            </a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="rates.html">Rate Cards</a></li>
+            <li><a href="booking.html">Book Now</a></li>
+            <li><a href="gallery.html">Our Work</a></li>
+            <li><a href="team.html">Our Team</a></li>  <!-- Add this line -->
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="suggestions.html">Suggestions</a></li>
+            <li><a href="admin/login.html" class="admin-btn">Admin</a></li>
+        </ul>
+    </div>
+</nav>
+
+<section class="booking-section" style="padding-top: 120px;">
+    <div class="booking-container" style="max-width: 800px; margin: 0 auto;">
+        <h2 style="text-align: center; margin-bottom: 2rem;">
+            <i class="fas fa-comment-dots"></i> Share Your Suggestions
+        </h2>
+        <p style="text-align: center; margin-bottom: 2rem; color: #666;">
+            We value your feedback! Help us improve by sharing your thoughts, ideas, or suggestions.
+        </p>
+        
+        <div id="suggestionMessage" style="display: none;"></div>
+        
+        <form id="suggestionForm">
+            <div class="form-group">
+                <label>Your Name *</label>
+                <input type="text" id="suggName" required>
+            </div>
+            <div class="form-group">
+                <label>Email Address *</label>
+                <input type="email" id="suggEmail" required>
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select id="suggCategory">
+                    <option value="feedback">Feedback</option>
+                    <option value="idea">New Idea</option>
+                    <option value="improvement">Improvement</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Your Suggestion *</label>
+                <textarea id="suggText" rows="5" required placeholder="Please share your suggestions or feedback..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>Rating (Optional)</label>
+                <div style="display: flex; gap: 10px; font-size: 1.5rem;">
+                    <span onclick="setRating(1)" style="cursor: pointer; color: #ddd;" id="star1">★</span>
+                    <span onclick="setRating(2)" style="cursor: pointer; color: #ddd;" id="star2">★</span>
+                    <span onclick="setRating(3)" style="cursor: pointer; color: #ddd;" id="star3">★</span>
+                    <span onclick="setRating(4)" style="cursor: pointer; color: #ddd;" id="star4">★</span>
+                    <span onclick="setRating(5)" style="cursor: pointer; color: #ddd;" id="star5">★</span>
+                </div>
+                <input type="hidden" id="suggRating" value="0">
+            </div>
+            <button type="submit" class="submit-btn">
+                <i class="fas fa-paper-plane"></i> Submit Suggestion
+            </button>
+        </form>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-container">
+        <p>&copy; 2026 IKELIGHTS MEDIA. All rights reserved.</p>
+    </div>
+</footer>
+
+<a href="https://wa.me/233546117004" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<script src="assets/js/main.js"></script>
+<script src="assets/js/chatbot.js"></script>
+
+<script>
+    let currentRating = 0;
+    
+    function setRating(rating) {
+        currentRating = rating;
+        document.getElementById('suggRating').value = rating;
+        for (let i = 1; i <= 5; i++) {
+            const star = document.getElementById(`star${i}`);
+            if (i <= rating) {
+                star.style.color = '#ffc107';
+            } else {
+                star.style.color = '#ddd';
+            }
+        }
+    }
+    
+    document.getElementById('suggestionForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('suggName').value;
+        const email = document.getElementById('suggEmail').value;
+        const category = document.getElementById('suggCategory').value;
+        const suggestion = document.getElementById('suggText').value;
+        const rating = document.getElementById('suggRating').value;
+        
+        // Save to localStorage
+        const suggestions = JSON.parse(localStorage.getItem('ikelights_suggestions') || '[]');
+        suggestions.push({
+            id: Date.now(),
+            name, email, category, suggestion, rating,
+            status: 'unread',
+            date: new Date().toISOString()
+        });
+        localStorage.setItem('ikelights_suggestions', JSON.stringify(suggestions));
+        
+        // Send via WhatsApp
+        const msg = `*NEW SUGGESTION*%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A*Category:* ${category}%0A*Rating:* ${rating}/5%0A*Suggestion:* ${suggestion}`;
+        window.open(`https://wa.me/233546117004?text=${msg}`, '_blank');
+        
+        const msgDiv = document.getElementById('suggestionMessage');
+        msgDiv.innerHTML = '<div style="background: #e8f5e9; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; text-align: center;">✅ Thank you for your suggestion! We appreciate your feedback.</div>';
+        msgDiv.style.display = 'block';
+        
+        document.getElementById('suggestionForm').reset();
+        setRating(0);
+        
+        setTimeout(() => {
+            msgDiv.style.display = 'none';
+        }, 5000);
+    });
+</script>
+</body>
+</html>

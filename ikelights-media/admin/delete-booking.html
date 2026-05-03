@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Booking - IKELIGHTS MEDIA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rockwell&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Rockwell', serif; background: #f5f5f7; padding: 50px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; border-radius: 20px; padding: 30px; }
+        h2 { color: #36454F; margin-bottom: 20px; }
+        .warning { background: #ffebee; color: #c62828; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .booking-details { background: #f9f9f9; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; margin-right: 10px; }
+        .btn-danger { background: #f44336; color: white; }
+        .btn-secondary { background: #999; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2><i class="fas fa-trash"></i> Delete Booking</h2>
+        <div class="warning">
+            <i class="fas fa-exclamation-triangle"></i> Warning: This action cannot be undone!
+        </div>
+        <div class="booking-details" id="bookingDetails">
+            Loading booking details...
+        </div>
+        <button class="btn btn-danger" onclick="confirmDelete()">Yes, Delete Booking</button>
+        <button class="btn btn-secondary" onclick="window.location.href='index.html'">Cancel</button>
+    </div>
+    
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookingId = urlParams.get('id');
+        
+        if (!bookingId) {
+            window.location.href = 'index.html';
+        }
+        
+        const bookings = JSON.parse(localStorage.getItem('ikelights_bookings') || '[]');
+        const booking = bookings.find(b => b.id == bookingId);
+        
+        if (booking) {
+            document.getElementById('bookingDetails').innerHTML = `
+                <p><strong>Booking ID:</strong> ${booking.id}</p>
+                <p><strong>Customer:</strong> ${booking.name}</p>
+                <p><strong>Service:</strong> ${booking.service}</p>
+                <p><strong>Date:</strong> ${booking.date}</p>
+                <p><strong>Time:</strong> ${booking.time}</p>
+            `;
+        }
+        
+        function confirmDelete() {
+            let bookings = JSON.parse(localStorage.getItem('ikelights_bookings') || '[]');
+            bookings = bookings.filter(b => b.id != bookingId);
+            localStorage.setItem('ikelights_bookings', JSON.stringify(bookings));
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

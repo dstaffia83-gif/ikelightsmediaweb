@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API - Booking Handler</title>
+</head>
+<body>
+    <script>
+        // This file simulates an API endpoint for bookings
+        // It processes booking data from the booking form
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        if (urlParams.has('action')) {
+            const action = urlParams.get('action');
+            
+            if (action === 'get') {
+                const bookings = JSON.parse(localStorage.getItem('ikelights_bookings') || '[]');
+                document.write(JSON.stringify(bookings));
+            } else if (action === 'add') {
+                const booking = {
+                    id: Date.now(),
+                    name: urlParams.get('name'),
+                    email: urlParams.get('email'),
+                    phone: urlParams.get('phone'),
+                    service: urlParams.get('service'),
+                    date: urlParams.get('date'),
+                    time: urlParams.get('time'),
+                    requests: urlParams.get('requests'),
+                    status: 'pending',
+                    created_at: new Date().toISOString()
+                };
+                
+                const bookings = JSON.parse(localStorage.getItem('ikelights_bookings') || '[]');
+                bookings.push(booking);
+                localStorage.setItem('ikelights_bookings', JSON.stringify(bookings));
+                document.write(JSON.stringify({success: true, booking_id: booking.id}));
+            }
+        }
+    </script>
+</body>
+</html>

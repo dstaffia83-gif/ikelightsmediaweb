@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Session - IKELIGHTS MEDIA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rockwell&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Additional booking page styles */
+        .booking-section {
+            min-height: calc(100vh - 400px);
+        }
+        
+        .booking-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        
+        .form-side {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .form-side h2 {
+            color: #36454F;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-side .subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #36454F;
+        }
+        
+        .form-group label .required {
+            color: #E2725B;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #E2725B;
+            box-shadow: 0 0 0 3px rgba(226,114,91,0.1);
+        }
+        
+        .submit-btn {
+            background: #E2725B;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover:not(:disabled) {
+            background: #c95a40;
+            transform: translateY(-2px);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .calendar-side {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 100px;
+        }
+        
+        .calendar-side h3 {
+            color: #36454F;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .calendar-legend {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f9f9f9;
+            border-radius: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+        }
+        
+        .legend-color.available { background: #4caf50; }
+        .legend-color.booked { background: #f44336; }
+        .legend-color.partial { background: #ff9800; }
+        .legend-color.selected { background: #E2725B; }
+        
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .calendar-nav button {
+            background: #E2725B;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+        }
+        
+        .calendar-weekday {
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            cursor: pointer;
+            background: #f5f5f7;
+            min-height: 60px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .calendar-day.available {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .calendar-day.available:hover {
+            transform: scale(1.05);
+        }
+        
+        .calendar-day.booked {
+            background: #f44336;
+            color: white;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        
+        .calendar-day.selected {
+            background: #E2725B;
+            color: white;
+            box-shadow: 0 0 0 3px rgba(226,114,91,0.3);
+        }
+        
+        .calendar-day.other-month {
+            opacity: 0.3;
+            cursor: default;
+        }
+        
+        .calendar-day.past {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .calendar-day .day-number {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        .calendar-day .booking-count {
+            font-size: 0.7rem;
+            margin-top: 2px;
+        }
+        
+        .time-slots {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #e0e0e0;
+        }
+        
+        .time-slots h4 {
+            margin-bottom: 1rem;
+            color: #36454F;
+        }
+        
+        .slots-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        
+        .time-slot {
+            padding: 12px;
+            text-align: center;
+            background: #f5f5f7;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .time-slot:hover:not(.disabled) {
+            background: #E2725B;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .time-slot.selected {
+            background: #E2725B;
+            color: white;
+            border: 2px solid #36454F;
+        }
+        
+        .time-slot.disabled {
+            background: #f44336;
+            color: white;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        .selected-date-info {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        
+        .selected-date-info strong {
+            color: #E2725B;
+        }
+        
+        @media (max-width: 968px) {
+            .split-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .calendar-side {
+                position: static;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .booking-section {
+                padding: 100px 1rem 3rem;
+            }
+            
+            .form-side, .calendar-side {
+                padding: 1.5rem;
+            }
+            
+            .calendar-grid {
+                gap: 4px;
+            }
+            
+            .calendar-day {
+                min-height: 45px;
+            }
+            
+            .calendar-day .day-number {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <div class="logo">
+            <a href="index.html">
+                <h1>IKELIGHTS <span>MEDIA</span></h1>  <!-- Fixed: KEHLIGHTS → IKELIGHTS -->
+                <p class="tagline">Capturing Moments, Creating Memories</p>
+            </a>
+        </div>
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-menu" id="navMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="rates.html">Rate Cards</a></li>
+            <li><a href="booking.html" class="active">Book Now</a></li>
+            <li><a href="gallery.html">Our Work</a></li>
+            <li><a href="team.html">Our Team</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="suggestions.html">Suggestions</a></li>
+            <li><a href="admin/login.html" class="admin-btn">Admin</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Booking Section -->
+<section class="booking-section">
+    <div class="booking-wrapper">
+        <div class="split-layout">
+            <!-- Left Side: Booking Form -->
+            <div class="form-side">
+                <h2><i class="fas fa-calendar-check"></i> Book Your Session</h2>
+                <p class="subtitle">Fill in the details below to reserve your spot</p>
+                
+                <div id="formMessage"></div>
+                
+                <form id="bookingForm">
+                    <div class="form-group">
+                        <label>Full Name <span class="required">*</span></label>
+                        <input type="text" id="name" required placeholder="Enter your full name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Email <span class="required">*</span></label>
+                        <input type="email" id="email" required placeholder="you@example.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="phone" required placeholder="054 611 7004">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Select Service <span class="required">*</span></label>
+                        <select id="service" required>
+                            <option value="">Choose a service</option>
+                            <option value="Wedding Preset">Wedding Preset - GHS 200</option>
+                            <option value="Melanin Retouching Luts">Melanin Retouching Luts - GHS 280</option>
+                            <option value="Light Skin Retouching Luts">Light Skin Retouching Luts - GHS 240</option>
+                            <option value="One on One Class - 3 Weeks">One on One Class (3 weeks) - GHS 5,000</option>
+                            <option value="One on One Class - 1 Month">One on One Class (1 month) - GHS 7,000</option>
+                            <option value="One on One Class - 2 Months">One on One Class (2 months) - GHS 10,000</option>
+                        </select>
+                    </div>
+                    
+                    <input type="hidden" id="selectedDate" required>
+                    <input type="hidden" id="selectedTime" required>
+                    
+                    <div class="form-group">
+                        <label>Special Requests</label>
+                        <textarea id="requests" rows="4" placeholder="Any specific requirements or questions?"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="submitBtn" disabled>
+                        <i class="fas fa-paper-plane"></i> Complete Booking
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Right Side: Calendar -->
+            <div class="calendar-side">
+                <h3><i class="fas fa-calendar-alt"></i> Availability Calendar</h3>
+                
+                <div class="calendar-legend">
+                    <div class="legend-item"><div class="legend-color available"></div><span>Available</span></div>
+                    <div class="legend-item"><div class="legend-color partial"></div><span>Limited Slots</span></div>
+                    <div class="legend-item"><div class="legend-color booked"></div><span>Fully Booked</span></div>
+                    <div class="legend-item"><div class="legend-color selected"></div><span>Selected</span></div>
+                </div>
+                
+                <div class="calendar-container">
+                    <div class="calendar-nav">
+                        <button onclick="changeMonth(-1)">← Previous</button>
+                        <span class="current-month" id="currentMonth">May 2026</span>
+                        <button onclick="changeMonth(1)">Next →</button>
+                    </div>
+                    <div id="calendar"></div>
+                </div>
+                
+                <div class="time-slots" id="timeSlots" style="display: none;">
+                    <h4><i class="fas fa-clock"></i> Available Time Slots</h4>
+                    <div class="slots-grid" id="slotsGrid"></div>
+                </div>
+                
+                <div class="selected-date-info" id="selectedInfo" style="display: none;">
+                    <i class="fas fa-check-circle"></i> Selected: <strong id="selectedDateDisplay"></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3 class="footer-logo">IKELIGHTS <span>MEDIA</span></h3>
+                <p>Capturing moments, creating memories that last a lifetime. Premium photography and videography services in Accra, Ghana.</p>
+                <div class="social-links">
+                    <a href="https://instagram.com/ikelightsmedia" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://facebook.com/ikelightsmedia" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/ikelightsmedia" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://tiktok.com/@ikelightsmedia" target="_blank"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="rates.html">Rate Cards</a></li>
+                    <li><a href="booking.html">Book Now</a></li>
+                    <li><a href="gallery.html">Our Work</a></li>
+                    <li><a href="team.html">Our Team</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Services</h4>
+                <ul>
+                    <li>Wedding Photography</li>
+                    <li>Portrait Sessions</li>
+                    <li>Event Coverage</li>
+                    <li>Photo Retouching</li>
+                    <li>One-on-One Classes</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <ul class="contact-info">
+                    <li><i class="fas fa-map-marker-alt"></i> HM7F+MGV Weija, Accra, Ghana</li>
+                    <li><i class="fas fa-phone"></i> <a href="tel:+233546117004">054 611 7004</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:vcasio94@gmail.com">vcasio94@gmail.com</a></li>
+                    <li><i class="fas fa-clock"></i> Mon-Sat: 9AM - 6PM</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span id="currentYear"></span> IKELIGHTS MEDIA. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/233546117004" class="whatsapp-float" target="_blank">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- Chatbot -->
+<div class="chatbot-container" id="ikelights-chatbot">
+    <div class="chatbot-toggle" id="chatbotToggle">
+        <i class="fas fa-comment-dots"></i>
+    </div>
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            <div class="chatbot-info">
+                <i class="fas fa-robot"></i>
+                <div>
+                    <h4>IKELIGHTS Assistant</h4>
+                    <p>Online • Usually replies instantly</p>
+                </div>
+            </div>
+            <button class="chatbot-minimize" id="minimizeChat">&minus;</button>
+        </div>
+        <div class="chatbot-messages" id="chatMessages">
+            <div class="message bot">
+                <div class="message-content">
+                    <p>👋 Hello! I'm IKELIGHTS virtual assistant. How can I help you today?</p>
+                    <div class="quick-replies">
+                        <button onclick="window.chatbot.quickReply('Pricing')">💰 Pricing</button>
+                        <button onclick="window.chatbot.quickReply('Booking')">📅 Booking</button>
+                        <button onclick="window.chatbot.quickReply('Location')">📍 Location</button>
+                        <button onclick="window.chatbot.quickReply('Services')">🎬 Services</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-input-area">
+            <input type="text" id="chatInput" placeholder="Type your message...">
+            <button id="sendMessageBtn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Booking data
+    let bookedDates = JSON.parse(localStorage.getItem('ikelights_bookings') || '[]');
+    let currentDate = new Date();
+    let currentMonth = currentDate.getMonth();
+    let currentYear = currentDate.getFullYear();
+    let selectedDateObj = null;
+    let selectedTimeSlot = null;
+    
+    const timeSlots = ['09:00:00', '11:00:00', '14:00:00', '16:00:00'];
+    const timeLabels = {
+        '09:00:00': '09:00 AM',
+        '11:00:00': '11:00 AM',
+        '14:00:00': '02:00 PM',
+        '16:00:00': '04:00 PM'
+    };
+    
+    function getBookingCount(dateStr) {
+        return bookedDates.filter(b => b.date === dateStr && b.status !== 'cancelled').length;
+    }
+    
+    function isFullyBooked(dateStr) {
+        return getBookingCount(dateStr) >= 4;
+    }
+    
+    function hasAvailability(dateStr) {
+        return getBookingCount(dateStr) < 4;
+    }
+    
+    function isPastDate(dateStr) {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const checkDate = new Date(dateStr);
+        return checkDate < today;
+    }
+    
+    function renderCalendar() {
+        const firstDay = new Date(currentYear, currentMonth, 1);
+        const lastDay = new Date(currentYear, currentMonth + 1, 0);
+        const daysInMonth = lastDay.getDate();
+        const startingDay = firstDay.getDay();
+        
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                           'July', 'August', 'September', 'October', 'November', 'December'];
+        document.getElementById('currentMonth').textContent = `${monthNames[currentMonth]} ${currentYear}`;
+        
+        let calendarHTML = '<div class="calendar-grid">';
+        
+        const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        for (let i = 0; i < weekdays.length; i++) {
+            calendarHTML += `<div class="calendar-weekday">${weekdays[i]}</div>`;
+        }
+        
+        for (let i = 0; i < startingDay; i++) {
+            calendarHTML += '<div class="calendar-day other-month"></div>';
+        }
+        
+        for (let day = 1; day <= daysInMonth; day++) {
+            const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            const isPast = isPastDate(dateStr);
+            const fullyBooked = isFullyBooked(dateStr);
+            const hasSlots = hasAvailability(dateStr);
+            const isSelected = selectedDateObj === dateStr;
+            const remainingSlots = 4 - getBookingCount(dateStr);
+            
+            let statusClass = '';
+            let statusText = '';
+            
+            if (isSelected) {
+                statusClass = 'selected';
+            } else if (isPast) {
+                statusClass = 'past';
+                statusText = 'Past';
+            } else if (fullyBooked) {
+                statusClass = 'booked';
+                statusText = 'Full';
+            } else if (hasSlots) {
+                statusClass = 'available';
+                statusText = remainingSlots > 0 ? `${remainingSlots} left` : '';
+            }
+            
+            calendarHTML += `
+                <div class="calendar-day ${statusClass}" onclick="${!isPast && !fullyBooked ? `selectDate('${dateStr}')` : ''}" data-date="${dateStr}">
+                    <div class="day-number">${day}</div>
+                    ${statusText ? `<div class="booking-count">${statusText}</div>` : ''}
+                </div>
+            `;
+        }
+        
+        const totalCells = startingDay + daysInMonth;
+        const remainingCells = (7 - (totalCells % 7)) % 7;
+        for (let i = 0; i < remainingCells; i++) {
+            calendarHTML += '<div class="calendar-day other-month"></div>';
+        }
+        
+        calendarHTML += '</div>';
+        document.getElementById('calendar').innerHTML = calendarHTML;
+    }
+    
+    function selectDate(dateStr) {
+        selectedDateObj = dateStr;
+        selectedTimeSlot = null;
+        
+        renderCalendar();
+        
+        const formattedDate = new Date(dateStr).toLocaleDateString('en-US', {
+            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+        });
+        document.getElementById('selectedDateDisplay').textContent = formattedDate;
+        document.getElementById('selectedInfo').style.display = 'block';
+        document.getElementById('selectedDate').value = dateStr;
+        document.getElementById('selectedTime').value = '';
+        
+        loadTimeSlots(dateStr);
+        checkSubmitButton();
+    }
+    
+    function loadTimeSlots(date) {
+        const bookedTimesForDate = bookedDates.filter(b => b.date === date).map(b => b.time);
+        
+        let slotsHTML = '';
+        for (let slot of timeSlots) {
+            const isBooked = bookedTimesForDate.includes(slot);
+            const isSelected = selectedTimeSlot === slot;
+            
+            slotsHTML += `
+                <div class="time-slot ${isBooked ? 'disabled' : ''} ${isSelected ? 'selected' : ''}" 
+                     onclick="${!isBooked ? `selectTime('${slot}')` : ''}">
+                    ${timeLabels[slot]}
+                    ${isBooked ? '<br><small>(Booked)</small>' : ''}
+                </div>
+            `;
+        }
+        
+        document.getElementById('slotsGrid').innerHTML = slotsHTML;
+        document.getElementById('timeSlots').style.display = 'block';
+    }
+    
+    function selectTime(time) {
+        selectedTimeSlot = time;
+        document.getElementById('selectedTime').value = time;
+        
+        const slots = document.querySelectorAll('.time-slot');
+        slots.forEach(slot => {
+            slot.classList.remove('selected');
+            if (slot.textContent.includes(timeLabels[time])) {
+                slot.classList.add('selected');
+            }
+        });
+        
+        checkSubmitButton();
+    }
+    
+    function checkSubmitButton() {
+        const submitBtn = document.getElementById('submitBtn');
+        const serviceSelect = document.getElementById('service');
+        
+        if (selectedDateObj && selectedTimeSlot && serviceSelect.value) {
+            submitBtn.disabled = false;
+        } else {
+            submitBtn.disabled = true;
+        }
+    }
+    
+    function changeMonth(delta) {
+        let newMonth = currentMonth + delta;
+        let newYear = currentYear;
+        
+        if (newMonth < 0) {
+            newMonth = 11;
+            newYear--;
+        } else if (newMonth > 11) {
+            newMonth = 0;
+            newYear++;
+        }
+        
+        currentMonth = newMonth;
+        currentYear = newYear;
+        renderCalendar();
+    }
+    
+    document.getElementById('service').addEventListener('change', checkSubmitButton);
+    
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (!selectedDateObj || !selectedTimeSlot) {
+            alert('Please select a date and time slot before booking.');
+            return;
+        }
+        
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const service = document.getElementById('service').value;
+        const requests = document.getElementById('requests').value;
+        
+        const booking = {
+            id: Date.now(),
+            name, email, phone, service,
+            date: selectedDateObj,
+            time: selectedTimeSlot,
+            requests,
+            status: 'pending',
+            created_at: new Date().toISOString()
+        };
+        
+        const bookings = JSON.parse(localStorage.getItem('ikelights_bookings') || '[]');
+        bookings.push(booking);
+        localStorage.setItem('ikelights_bookings', JSON.stringify(bookings));
+        
+        const whatsappMsg = `*NEW BOOKING - IKELIGHTS MEDIA*%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A*Phone:* ${phone}%0A*Service:* ${service}%0A*Date:* ${selectedDateObj}%0A*Time:* ${selectedTimeSlot.replace(':00:00', '')}%0A*Requests:* ${requests}`;
+        window.open(`https://wa.me/233546117004?text=${whatsappMsg}`, '_blank');
+        
+        alert('Booking submitted successfully! You will receive a confirmation via WhatsApp.');
+        
+        document.getElementById('bookingForm').reset();
+        selectedDateObj = null;
+        selectedTimeSlot = null;
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('selectedInfo').style.display = 'none';
+        document.getElementById('timeSlots').style.display = 'none';
+        
+        bookedDates = JSON.parse(localStorage.getItem('ikelights_bookings') || '[]');
+        renderCalendar();
+    });
+    
+    renderCalendar();
+    
+    // Mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+    }
+    
+    window.addEventListener('scroll', () => {
+        const navbar = document.getElementById('navbar');
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+    
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+</script>
+
+<script src="assets/js/chatbot.js"></script>
+</body>
+</html>
